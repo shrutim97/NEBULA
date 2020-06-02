@@ -7,6 +7,7 @@ import subprocess
 import os
 import cgi
 
+#storage creation for teacher
 form=cgi.FieldStorage()
 size=form.getvalue('s') 
 usn=form.getvalue('usn')
@@ -14,19 +15,19 @@ usn=form.getvalue('usn')
 f5=open("/var/www/cgi-bin/tstaas.yml", "w")
 f5.write("""- hosts: localhost
   tasks:
-       - lvol: 
+       - lvol:                                                                                #logical volume creation
           vg: staas
           lv: {0}
           size: {1}
-       - filesystem:
+       - filesystem:                                                                           #filesystem creation
           fstype: ext4
           dev: /dev/staas/{0}
-       - file:
+       - file:                                                                                 #creation of teacher storage directory 
           path: "/var/www/html/TEACHER_STAAS/{0}"
-state: directory
+          state: directory
           owner: apache
           mode: 0755
-       - mount:
+       - mount:                                                                                 
           path: "/var/www/html/TEACHER_STAAS/{0}"
           src: "/dev/staas/{0}"
           fstype: ext4
@@ -37,6 +38,8 @@ state: directory
           line: "/dev/staas/{0} /var/www/html/TEACHER_STAAS/{0} ext4 defaults 0 0"  
 """.format(usn,size))
 f5.close()
+
+#nfs service being started
 f6=open("/var/www/cgi-bin/tnfs_start.yml", "w")
 f6.write("""- hosts: localhost
   tasks:
@@ -54,8 +57,10 @@ f6.write("""- hosts: localhost
 
    """.format(usn))
 f6.close()
+
+#mounting directory on client using nfs
 f7=open("/var/www/cgi-bin/tnfs_mount.yml","w")
-f7.write("""- hosts: all
+f7.write("""- hosts: node2
   tasks:
     - mount:
         fstype: nfs
