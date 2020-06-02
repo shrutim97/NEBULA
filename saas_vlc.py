@@ -7,9 +7,8 @@ print("\n")
 import subprocess
 import os
 import cgi
-form=cgi.FieldStorage()
 
-
+#VLC 
 
 file4=open("/var/www/cgi-bin/saas_vlc.yml","w")
 file4.write(""" - hosts: all
@@ -46,10 +45,10 @@ file4.write(""" - hosts: all
          ipc_mode: host
          volumes:
            - /root/:/root/
-           - /tmp/.X11-unix:/tmp/.X11-unix
-           - /root/Music/test_video.mp4:/root/vid.mp4
-         devices: /dev/snd:/dev/snd
-         privileged: yes
+           - /tmp/.X11-unix:/tmp/.X11-unix                                                #graphical socket sharing
+           - /root/Music/test_video.mp4:/root/vid.mp4                                     #random test video file
+         devices: /dev/snd:/dev/snd                                                       #audio device sharing
+         privileged: yes                                                                  #root user being given the privilege to run vlc
          state: started
          detach: yes
          interactive: yes
