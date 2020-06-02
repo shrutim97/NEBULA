@@ -7,6 +7,8 @@ import subprocess
 import os
 import cgi
 
+#to create storage for students
+
 form=cgi.FieldStorage()
 size=form.getvalue('s') 
 usn=form.getvalue('usn')
@@ -14,29 +16,31 @@ usn=form.getvalue('usn')
 f5=open("/var/www/cgi-bin/staas.yml", "w") 
 f5.write("""- hosts: localhost
   tasks:
-       - lvol:
+       - lvol:                                                                                #logical volume creation
           vg: staas
           lv: {0}
           size: {1}
-       - filesystem:
+       - filesystem:                                                                          #creates a filesystem
           fstype: ext4
           dev: /dev/staas/{0}
-       - file:
+       - file:                                                                                #students storage directory created
           path: "/var/www/html/STAAS_CLOUD/{0}"
           state: directory
           owner: apache
           mode: 0755
-       - mount:
+       - mount:                                                                               #mounting the storage created                                                                 
           path: "/var/www/html/STAAS_CLOUD/{0}"
           src: "/dev/staas/{0}"
           fstype: ext4
           state: mounted
        - command: "partprobe /dev/sdc"
-       - lineinfile:
+       - lineinfile:                                                                        
           path: "/etc/fstab"
           line: "/dev/staas/{0} /var/www/html/STAAS_CLOUD/{0} ext4 defaults 0 0"  
 """.format(usn,size))
 f5.close()
+
+#starting nfs service
 f6=open("/var/www/cgi-bin/nfs_start.yml", "w")
 f6.write("""- hosts: localhost
   tasks:
@@ -55,6 +59,8 @@ f6.write("""- hosts: localhost
 
    """.format(usn))
 f6.close()
+
+#mounting the directory on the client system using nfs service
 f7=open("/var/www/cgi-bin/nfs_mount.yml","w")
 f7.write("""- hosts: all
   tasks:
