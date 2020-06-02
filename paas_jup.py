@@ -7,9 +7,10 @@ import subprocess
 import os
 import cgi
 
+#Jupyter-notebook
 
 file1=open("/var/www/cgi-bin/jupyter.yml", "w")
-file1.write("""- hosts: all
+file1.write("""- hosts: node1
   tasks:
 
    - yum:
@@ -32,12 +33,12 @@ file1.write("""- hosts: all
        state: started
 
    - copy:
-       src: "/root/jupyter_saas.tar"
+       src: "/root/jupyter_saas.tar"                                                                #docker image tar file of jupyter copied from server to client
        dest: "/root/jupyter_saas.tar"
 
    - docker_image:
        name: "jupyter:v3"
-       load_path: "/root/jupyter_saas.tar"
+       load_path: "/root/jupyter_saas.tar"                                                          #loading the docker image onto client system
        state: present
 
    - docker_container:
@@ -48,8 +49,8 @@ file1.write("""- hosts: all
        ipc_mode: host
        tty: true
        exposed_ports: 8888
-       published_ports: "2400:8888"
-       command: "jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root"
+       published_ports: "2400:8888"                                                                 #exposing the jupyter-notebook port 
+       command: "jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root"                          
 """)
 
 file1.close()
