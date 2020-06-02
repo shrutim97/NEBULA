@@ -7,6 +7,7 @@ import subprocess
 import os
 import cgi
 
+#checking if storage already present for teacher
 
 form=cgi.FieldStorage()
 usn=form.getvalue('usn')
@@ -15,7 +16,7 @@ present=subprocess.getoutput("ls /var/www/html/TEACHER_STAAS | grep '"+usn+"'")
 
 if (present == usn):
     print("content-type:text/html")
-    print("Location: http://192.168.43.72/TEACHER_STAAS/{0}".format(present))
+    print("Location: http://192.168.43.72/TEACHER_STAAS/{0}".format(present))                       #if present, directory listing of teacher storage
     print("\n")
 
     print('<html>')
@@ -26,7 +27,7 @@ if (present == usn):
 
 else:
     print("content-type:text/html")
-    print("Location: http://192.168.43.72/tnodir.html?usn=%s" %usn )
+    print("Location: http://192.168.43.72/tnodir.html?usn=%s" %usn )                                #else request for creation of storage
     print("\n")
 
     print('<html>')
