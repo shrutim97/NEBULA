@@ -8,10 +8,10 @@ import subprocess
 import os
 import cgi
 
+#Code::Blocks 
 
-print("hello")
 file2=open("/var/www/cgi-bin/code.yml","w")
-file2.write("""- hosts: all
+file2.write("""- hosts: node1
   tasks:
 
 
@@ -20,7 +20,7 @@ file2.write("""- hosts: all
         state: present
 
     - copy:
-        src: "/root/get-pip.py"
+        src: "/root/get-pip.py"                                                                     #pip script file
         dest: "/root/get-pip.py"
 
     - command: "python get-pip.py"
@@ -34,12 +34,12 @@ file2.write("""- hosts: all
         state: started
 
     - copy:
-        src: "/root/codeblocks.tar"
+        src: "/root/codeblocks.tar"                                                                 #copy docker image tar file from server to client
         dest: "/root/codeblocks.tar"
 
     - docker_image:
         name: "codeblocks:v2"
-        load_path: "/root/codeblocks.tar"
+        load_path: "/root/codeblocks.tar"                                                           #loading docker image
         state: present
 
     - docker_container:
@@ -48,7 +48,7 @@ file2.write("""- hosts: all
         state: started
         interactive: true
         volumes:
-          - /tmp/.X11-unix/:/tmp/.X11-unix/
+          - /tmp/.X11-unix/:/tmp/.X11-unix/                                                         #graphical socket sharing
 #        env:
 #          DISPLAY: "{{ lookup('env','DISPLAY')}}"
         ipc_mode: host
@@ -60,7 +60,6 @@ file2.write("""- hosts: all
 """)
 
 file2.close()
-print("shall i run?")
 x = subprocess.getstatusoutput("sudo ansible-playbook /var/www/cgi-bin/code.yml")
 print(x)
 print("<h2> Codeblocks has been successfully launched on your system </h2>")
