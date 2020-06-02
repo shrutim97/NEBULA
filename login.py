@@ -11,6 +11,7 @@ pymysql.install_as_MySQLdb()
 
 import MySQLdb
 
+#Authentication check 
 
 if __name__ == '__main__':
    db = MySQLdb.connect("localhost","root","XXXX","project" )
@@ -21,6 +22,8 @@ if __name__ == '__main__':
    sql1 = "select usn,password from student where usn='"+un+"' and password='"+passwd+"'"
    sql2 = "insert into login values('"+un+"' , NOW())"
    sql3 = "select tid,password from teacher where tid='"+un+"' and password='"+passwd+"'"
+   
+   
    if(cursor.execute(sql1)):
       cursor.execute(sql2)
       db.commit()
@@ -30,7 +33,7 @@ if __name__ == '__main__':
 
       print('<html>')
       print('<head>')
-      print('<meta http-equiv="refresh" content="0;url= MAIN.html?usn=%s" />' %un) 
+      print('<meta http-equiv="refresh" content="0;url= MAIN.html?usn=%s" />' %un)                    #Home page for student
       print('</head>')
       print('</html>')
 
@@ -43,7 +46,7 @@ if __name__ == '__main__':
 
       print('<html>')
       print('<head>')
-      print('<meta http-equiv="refresh" content="0;url= MAIN_TEACHER.html?usn=%s" />' %un) 
+      print('<meta http-equiv="refresh" content="0;url= MAIN_TEACHER.html?usn=%s" />' %un)              #Home page for teacher
       print('</head>')
       print('</html>')
 
@@ -54,7 +57,7 @@ if __name__ == '__main__':
 
       print('<html>')
       print('<head>')
-      print('<meta http-equiv="refresh" content="0;url= cloudlogin2.html" />') 
+      print('<meta http-equiv="refresh" content="0;url= cloudlogin2.html" />')                          #if credentials don't match, Login page is refreshed
       print('</head>')
       print('</html>')
 
