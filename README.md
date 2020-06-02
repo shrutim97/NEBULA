@@ -1,4 +1,4 @@
-# NEBULA
+# NEBULA – Cloud Platform for Educational Institutions
 Final year project 
 
 This project work proposes an all-in-one private cloud platform for an educational institution, providing multiple cloud-based services to the clients in order to enhance productivity and provide cost optimization. Three major services are provided i.e., StaaS, PaaS and SaaS to the clients. Instead of downloading heavy software and the intensive configuration of testing environment, students and teachers can use these cloud services which helps them to manage their academic work at one place reducing their time consumption and increasing efficiency.
