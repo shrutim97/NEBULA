@@ -62,7 +62,7 @@ f6.close()
 
 #mounting the directory on the client system using nfs service
 f7=open("/var/www/cgi-bin/nfs_mount.yml","w")
-f7.write("""- hosts: all
+f7.write("""- hosts: node1
   tasks:
     - mount:
         fstype: nfs
