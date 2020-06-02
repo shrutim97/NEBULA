@@ -9,10 +9,10 @@ import os
 import cgi
 
 
-print("hello i am working")
+#Firefox
 
 file3=open("/var/www/cgi-bin/saas_firefox.yml","w")
-file3.write("""- hosts: all
+file3.write("""- hosts: node1
   tasks:
 
     - yum:
@@ -49,15 +49,13 @@ file3.write("""- hosts: all
         volumes:
           - /run/media/root/RHEL-7.5\ Server.x86_64:/dvd
           - /root/rhel7rpm:/extras
-          - /tmp/.X11-unix/:/tmp/.X11-unix/
+          - /tmp/.X11-unix/:/tmp/.X11-unix/                                   #graphical socket sharing
         state: started
         command: firefox
 """)
 
 file3.close()
-print("yml file ready")
 
-x = subprocess.getstatusoutput("sudo ansible-playbook /var/www/cgi-bin/saas_firefox.yml")
-print(x)
+subprocess.getstatusoutput("sudo ansible-playbook /var/www/cgi-bin/saas_firefox.yml")
 print("<h3> FIREFOX has been launched on your system </h3>")
 print("<h4> THANK YOU</h4>")                                                  
