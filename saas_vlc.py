@@ -11,7 +11,7 @@ import cgi
 #VLC 
 
 file4=open("/var/www/cgi-bin/saas_vlc.yml","w")
-file4.write(""" - hosts: all
+file4.write(""" - hosts: node1
    tasks:
       - yum:
          name: docker-ce
