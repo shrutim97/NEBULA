@@ -6,3 +6,4 @@ This project work proposes an all-in-one private cloud platform for an education
 
 The project is built on Red Hat Enterprise Linux 7. Front-end is developed using HTML/CSS and JavaScript. Backend involves Containerization technology using Docker and Automation using Ansible tool. Database of the project is handled by MySQL and Network File System service is used for sharing of files over the network to remote client system.
 
+test 
